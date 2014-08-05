@@ -1,5 +1,5 @@
 class TwitterFeedController < ApplicationController
-  caches_action :show, expires_in: 2.minutes
+  caches_action :show, expires_in: 1.hour
 
   def show
     twitter_handle = params[:handle]
