@@ -28,9 +28,12 @@ gem 'spring',        group: :development
 
 gem 'dotenv-rails', :groups => [:development, :test]
 
+gem 'actionpack-action_caching'
 gem "koala", "~> 1.10.0"
 gem "httparty", "~> 0.13.1"
 gem "json"
+
+gem 'twitter'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

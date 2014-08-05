@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'twitter_feed/:handle' => 'twitter_feed#show'
+
   get 'facebook_feed/:facebook_page_id' => 'facebook_feed#show'
 
   # The priority is based upon order of creation: first created -> highest priority.
