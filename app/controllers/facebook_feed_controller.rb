@@ -1,6 +1,6 @@
 require 'uri'
 class FacebookFeedController < ApplicationController
-  caches_action :show, expires_in: 1.hour
+  # caches_action :show, expires_in: 1.hour
 
   def show
     page_id = params[:facebook_page_id]
