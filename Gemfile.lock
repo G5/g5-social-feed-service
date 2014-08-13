@@ -84,6 +84,7 @@ GEM
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     naught (1.0.0)
+    newrelic_rpm (3.9.0.229)
     polyglot (0.3.5)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -183,6 +184,7 @@ DEPENDENCIES
   jquery-rails
   json
   koala (~> 1.10.0)
+  newrelic_rpm
   rails (= 4.1.4)
   rspec-rails (~> 3.0.0)
   sass-rails (~> 4.0.3)
