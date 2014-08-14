@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  get 'google_plus_feed/:google_plus_page_id' => 'google_plus_feed#show'
+  get 'google-plus-feed/:google_plus_page_id' => 'google_plus_feed#show'
 
-  get 'twitter_feed/:handle' => 'twitter_feed#show'
+  get 'twitter-feed/:handle' => 'twitter_feed#show'
 
-  get 'facebook_feed/:facebook_page_id' => 'facebook_feed#show'
+  get 'facebook-feed/:facebook_page_id' => 'facebook_feed#show'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
