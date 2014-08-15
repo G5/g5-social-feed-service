@@ -10,7 +10,7 @@ class TwitterFeedController < ApplicationController
     }
 
     client = Twitter::REST::Client.new(config)
-    options = {:count => 5, :include_rts => true}
+    options = {:count => 10, :include_rts => true}
     twitter_feed = client.user_timeline(twitter_handle, options)
 
     render json: twitter_feed
