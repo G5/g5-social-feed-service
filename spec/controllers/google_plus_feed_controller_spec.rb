@@ -5,7 +5,6 @@ RSpec.describe GooglePlusFeedController, :type => :controller do
     @google_plus_object = Object.new
     @page_id = "1234567890"
   end
-    
 
   it "Initializes the GooglePlus API with the correct params" do
     expect(GooglePlus::Person).to receive(:get).with(@page_id)
