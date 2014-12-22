@@ -20,7 +20,7 @@ class WalkscoreController < ApplicationController
       :lat => walkscore_get_fields["location"]["latitude"],
       :lon => walkscore_get_fields["location"]["longitude"]
     }
-    walkscore_score_uri = URI.encode("http://api.walkscore.com/score?format=json&address=#{fields[:address]} #{fields[:city]} #{fields[:state]}&lat=#{fields[:lat]}&lon=#{fields[:lon]}&wsapikey=#{ENV['WALKSCORE_APP_SECRET']}")
+    walkscore_score_uri = URI.encode("http://api.walkscore.com/score?format=json&address=#{fields[:address]} #{fields[:city]} #{fields[:state]}&lat=#{fields[:lat]}&lon=#{fields[:lon]}&wsapikey=#{ENV['WALKSCORE_API_KEY']}")
     response = HTTParty.get(walkscore_score_uri)
   end
 
