@@ -10,7 +10,7 @@ RSpec.describe WalkscoreController, :type => :controller do
 
   it "returns a json response from Walkscore API" do
     #could mock out the response so it's not hitting a real service
-    response = controller.walkscore_uri_method
+    response = controller.walkscore_uri_method(walkscore_location)
     response.header['Content-Type'].should include 'application/json'
   end
 end
