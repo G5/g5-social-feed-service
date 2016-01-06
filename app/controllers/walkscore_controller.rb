@@ -1,8 +1,8 @@
 require 'uri'
 class WalkscoreController < ApplicationController
-  #caches_action :show, expires_in: 12.hours
+  caches_action :show, expires_in: 12.hours
 
-  def walkscore_uri_method
+  def walkscore_uri_method(walkscore_client)
     fields = {
       :address => params[:address],
       :city => params["city"],
@@ -16,7 +16,7 @@ class WalkscoreController < ApplicationController
 
   def show
     walkscore_json = "[]"
-    walkscore_json = walkscore_uri_method.parsed_response
+    walkscore_json = walkscore_uri_method(params[:walkscore_client]).parsed_response
     render json: walkscore_json
   end
 end
