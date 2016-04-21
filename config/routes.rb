@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'twitter-feed/:handle' => 'twitter_feed#show'
 
   get 'facebook-feed/:facebook_page_id' => 'facebook_feed#show'
+  get 'facebook-feed' => 'facebook_feed#show'
 
   get 'walkscore-params/:walkscore_client' => 'walkscore#show'
 
