@@ -3,7 +3,7 @@ class FacebookFeedController < ApplicationController
   caches_action :show, expires_in: 1.hour
 
   def show
-    page_id = params[:facebook_page_id]
+    page_id = params[:facebook_page_id] || (not_found and return)
 
     fields = ["id", "from", "message", "picture", "link", "type", "created_time", "updated_time"]
 
