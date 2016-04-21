@@ -7,4 +7,8 @@ class ApplicationController < ActionController::Base
   def allow_cross_domain
     headers['Access-Control-Allow-Origin'] = '*'
   end
+
+  def not_found
+    render text: "404 not found", status: 404
+  end
 end
