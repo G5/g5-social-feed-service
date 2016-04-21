@@ -14,6 +14,10 @@ $ bundle
 ```
 /facebook-feed/255110695512.json
 ```
+For Facebook you can also use query params (because some user names include a `.` and that confuses rails)...
+```
+/facebook-feed.json?facebook_page_id=255110695512
+```
 ```
 /twitter-feed/surfline.json
 ```
