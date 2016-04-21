@@ -1,6 +1,8 @@
 require 'uri'
 class FacebookFeedController < ApplicationController
-  caches_action :show, expires_in: 1.hour
+
+  # Specify cache path since we serve this action from two different routes
+  caches_action :show, cache_path: Proc.new { params[:facebook_page_id] }, expires_in: 1.hour
 
   def show
     page_id = params[:facebook_page_id] || (not_found and return)
