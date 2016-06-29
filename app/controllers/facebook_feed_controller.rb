@@ -9,7 +9,7 @@ class FacebookFeedController < ApplicationController
 
     fields = ["id", "from", "message", "picture", "link", "type", "created_time", "updated_time"]
 
-    facebook_feed_uri = URI.encode("https://graph.facebook.com/#{page_id}/posts?access_token=#{ENV['FACEBOOK_APP_ID']}|#{ENV['FACEBOOK_APP_SECRET']}&fields=#{fields.join(',')}")
+    facebook_feed_uri = URI.encode("https://graph.facebook.com/v2.6/#{page_id}/posts?access_token=#{ENV['FACEBOOK_APP_ID']}|#{ENV['FACEBOOK_APP_SECRET']}&fields=#{fields.join(',')}")
     response = HTTParty.get(facebook_feed_uri)
 
     render json: response.parsed_response
