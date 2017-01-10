@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe WalkscoreController, :type => :controller do
-  before do 
+  before do
     controller.stub(:params).and_return({:address=>"201 Wilshire Blvd Ste 102", :city=>"Santa Monica", :state=>"CA", :lat=>"34.0180307", :lon=>"-118.500053"})
   end
 
