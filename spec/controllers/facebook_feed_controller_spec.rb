@@ -12,7 +12,6 @@ RSpec.describe FacebookFeedController, :type => :controller do
 
   it "Calls the Facebook Graph API with the correct params" do
     expect(HTTParty).to receive(:get).with(facebook_api_request).and_return(response_json)
-    
     get :show, facebook_page_id: page_id
   end
 
