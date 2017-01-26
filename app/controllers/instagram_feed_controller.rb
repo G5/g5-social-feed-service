@@ -1,5 +1,5 @@
 class InstagramFeedController < ApplicationController
-  # caches_action :show, expires_in: 1.hour
+  caches_action :show, expires_in: 1.hour
 
   # The instagram user id is NOT the username -- it will be a numeric code
   # You can find this by going here https://smashballoon.com/instagram-feed/find-instagram-user-id/
