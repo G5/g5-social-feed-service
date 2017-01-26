@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   get 'facebook-feed/:facebook_page_id' => 'facebook_feed#show'
   get 'facebook-feed' => 'facebook_feed#show'
-
+  get 'instagram-feed' => 'instagram_feed#show'
   get 'walkscore-params/:walkscore_client' => 'walkscore#show'
 
   # The priority is based upon order of creation: first created -> highest priority.
