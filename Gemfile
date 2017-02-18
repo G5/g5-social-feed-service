@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby "2.1.2"
+ruby "2.3.0"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.4'
@@ -31,7 +31,7 @@ gem 'dotenv-rails', :groups => [:development, :test]
 gem 'actionpack-action_caching'
 gem "koala", "~> 1.10.0"
 gem "httparty", "~> 0.13.1"
-gem "json"
+gem "json", '1.8.3'
 gem 'newrelic_rpm'
 
 gem 'twitter'

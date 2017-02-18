@@ -1,0 +1,39 @@
+ciutil:
+  image: g5search/cirunner
+  encrypted_env_file: ci/pre-build/secret-writer.env.encrypted
+  environment:
+    - IMAGE_NAME=g5search/g5-social-feed-service
+  volumes:
+    - .:/codebase
+
+rails_pre_deps:
+  build:
+    image: pre-deps
+    dockerfile: ci/pre-deps/Dockerfile
+  cached: true
+
+rails_tests:
+  build:
+    image: test
+    dockerfile: ci/test-rails/Dockerfile
+  cached: true
+  environment:
+    RAILS_ENV: test
+  links:
+    - db
+
+
+rails_prod:
+  build:
+    image: production
+    dockerfile: ci/build-prod/Dockerfile
+  cached: true
+
+dind:
+  image: docker:dind
+  add_docker: true
+  encrypted_env_file: ci/push/dockerauth.env.encrypted
+  environment:
+    - IMAGE_NAME=g5search/g5-social-feed-service
+  volumes:
+    - .:/codebase
