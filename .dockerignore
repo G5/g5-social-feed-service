@@ -1,0 +1,9 @@
+Dockerfile
+k8s/*
+tmp/*
+.env
+.env.*
+.git*
+
+# This is where circleci bundles everything
+vendor/bundle

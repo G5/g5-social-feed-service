@@ -1,0 +1,29 @@
+- name: pre_build
+  type: serial
+  steps:
+    - name: pre-build-wrangling
+      service: ciutil
+      command: /codebase/ci/pre-build/prebuild-wrangling.sh
+    - name: build_rails_base
+      service: rails_pre_deps
+      command: true
+
+- name: tests_and_builds
+  type: parallel
+  steps:
+    - name: test_rails
+      service: rails_tests
+      command: ci/test-rails/ruby-specs.sh
+    - name: build_prod_image
+      service: rails_prod
+      command: true
+
+- name: maybepush
+  type: serial
+  steps:
+    - name: push
+      service: dind
+      command: /codebase/ci/push/maybepush.sh
+    - name: notify
+      service: ciutil
+      command: /codebase/ci/push/maybenotify.sh
