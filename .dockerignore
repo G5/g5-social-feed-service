@@ -1,7 +1,6 @@
 Dockerfile
 k8s/*
 tmp/*
-.env
 .env.*
 .git*
 
