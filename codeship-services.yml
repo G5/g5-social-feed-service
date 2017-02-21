@@ -19,9 +19,6 @@ rails_tests:
   cached: true
   environment:
     RAILS_ENV: test
-  links:
-    - db
-
 
 rails_prod:
   build:
