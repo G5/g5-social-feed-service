@@ -1,0 +1,8 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: g5-social-feed-service
+  labels:
+    app: g5-social-feed-service
+data:
+  puma-concurrency: "10"
