@@ -1,0 +1,156 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    dalton.getg5.com/application: |-
+      {
+        "imageTags": [
+          { "containerName": "rails-server" }
+        ]
+      }
+  name: g5-social-feed-service-rails-servers
+  labels:
+    app: g5-social-feed-service
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: "75%"
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: g5-social-feed-service
+      tier: web-app
+  template:
+    metadata:
+      name: rails-server
+      labels:
+        app: g5-social-feed-service
+        tier: web-app
+    spec:
+      imagePullSecrets:
+        - name: docker-registry-service-account
+      containers:
+        - name: rails-server
+          image: g5search/g5-social-feed-service
+          command: [ "bundle", "exec", "rails", "s" ]
+          ports:
+            - name: http
+              containerPort: 3000
+          livenessProbe:
+            httpGet:
+              path: /okcomputer
+              port: http
+              httpHeaders:
+                - name: X-Forwarded-Proto
+                  value: https
+            initialDelaySeconds: 15
+            timeoutSeconds: 10
+            failureThreshold: 6
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /okcomputer
+              port: http
+              httpHeaders:
+                - name: X-Forwarded-Proto
+                  value: https
+            initialDelaySeconds: 15
+            timeoutSeconds: 10
+            failureThreshold: 6
+            periodSeconds: 10
+          resources:
+            requests:
+              memory: "768Mi"
+              cpu: "500m"
+            limits:
+              memory: "1024Mi"
+              cpu: "1000m"
+          volumeMounts:
+            - name: config
+              mountPath: /app/config/k8s
+          env:
+            - name: RAILS_ENV
+              value: production
+            - name: RACK_ENV
+              value: production
+            # tier-specific
+            - name: PUMA_CONCURRENCY
+              valueFrom:
+                configMapKeyRef:
+                  name: g5-social-feed-service
+                  key: puma-concurrency
+            #app-specific
+            - name: FACEBOOK_APP_ID
+              valueFrom:
+                secretKeyRef:
+                  name: g5-social-feed-service
+                  key: facebook-app-id
+            - name: FACEBOOK_APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: g5-social-feed-service
+                  key: facebook-app-secret
+            - name: GOOGLE_PLUS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: g5-social-feed-service
+                  key: google-plus-api-key
+            - name: INSTAGRAM_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: g5-social-feed-service
+                  key: instagram-access-token
+            - name: TWITTER_CONSUMER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: g5-social-feed-service
+                  key: twitter-consumer-key
+            - name: TWITTER_CONSUMER_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: g5-social-feed-service
+                  key: twitter-consumer-secret
+            - name: WALKSCORE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: g5-social-feed-service
+                  key: walkscore-api-key
+            # namespace-specific
+            - name: NEW_RELIC_LICENSE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: g5-social-feed-service
+                  key: new-relic-license-key
+            - name: NEW_RELIC_APP_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: g5-social-feed-service
+                  key: new-relic-license-key
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: g5-social-feed-service
+                  key: redis-url
+            - name: PAGERDUTY_CLW_SERVICE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: g5-social-feed-service
+                  key: pagerduty-clw-service-key
+            - name: PAGESPEED_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: g5-social-feed-service
+                  key: pagespeed-api-key
+            - name: PD_ALERT_THRESHOLD
+              valueFrom:
+                configMapKeyRef:
+                  name: g5-social-feed-service
+                  key: pagespeed-api-key
+            - name: PD_RESOLVABLE_THRESHOLD
+              valueFrom:
+                configMapKeyRef:
+                  name: g5-social-feed-service
+                  key: pagespeed-resolvable-threshold
