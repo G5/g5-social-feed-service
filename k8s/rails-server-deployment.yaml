@@ -98,6 +98,16 @@ spec:
                 secretKeyRef:
                   name: g5-social-feed-service
                   key: google-plus-api-key
+            - name: INSTAGRAM_APP_ID
+              valueFrom:
+                secretKeyRef:
+                  name: g5-social-feed-service
+                  key: instagram-app-id
+            - name: INSTAGRAM_APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: g5-social-feed-service
+                  key: instagram-app-secret
             - name: INSTAGRAM_ACCESS_TOKEN
               valueFrom:
                 secretKeyRef:
