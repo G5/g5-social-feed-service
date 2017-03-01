@@ -20,6 +20,7 @@ gem 'redis-namespace'
 gem 'twitter'
 gem 'google_plus'
 gem 'puma'
+gem 'okcomputer'
 
 group :test do
   gem 'rspec-rails'

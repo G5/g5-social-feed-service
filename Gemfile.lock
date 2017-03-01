@@ -125,6 +125,7 @@ GEM
     nio4r (2.1.0)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
+    okcomputer (1.17.4)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -260,9 +261,10 @@ DEPENDENCIES
   honeybadger (~> 3.1)
   httparty
   jquery-rails
-  json (= 1.8.3)
+  json
   koala (~> 1.10.0)
   newrelic_rpm
+  okcomputer
   pry
   puma
   rails (~> 5.1.2)
