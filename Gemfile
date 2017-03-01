@@ -41,6 +41,8 @@ gem 'rspec-rails', '~> 3.0.0', :groups => [:development, :test]
 
 gem 'puma'
 
+gem 'okcomputer'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

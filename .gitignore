@@ -20,3 +20,9 @@
 
 .DS_Store
 dalton_check.sh
+
+# Gems installed here to make repeated Docker builds a little quicker. Bundling
+# can't be cached because of FURY_AUTH. Bundler checks this directory before it
+# checks your system gems.
+vendor/cache
+vendor/bundl
