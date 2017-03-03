@@ -68,9 +68,9 @@ spec:
             limits:
               memory: "1024Mi"
               cpu: "1000m"
-          volumeMounts:
-            - name: config
-              mountPath: /app/config/k8s
+          #volumeMounts:
+            #- name: config
+              #mountPath: /app/config/k8s
           env:
             - name: RAILS_ENV
               value: production
@@ -80,87 +80,61 @@ spec:
             - name: PUMA_CONCURRENCY
               valueFrom:
                 configMapKeyRef:
-                  name: g5-social-feed-service
+                  name: social-feed-service
                   key: puma-concurrency
             #app-specific
             - name: FACEBOOK_APP_ID
               valueFrom:
                 secretKeyRef:
-                  name: g5-social-feed-service
+                  name: social-feed-service
                   key: facebook-app-id
             - name: FACEBOOK_APP_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: g5-social-feed-service
+                  name: social-feed-service
                   key: facebook-app-secret
             - name: GOOGLE_PLUS_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: g5-social-feed-service
+                  name: social-feed-service
                   key: google-plus-api-key
-            - name: INSTAGRAM_APP_ID
-              valueFrom:
-                secretKeyRef:
-                  name: g5-social-feed-service
-                  key: instagram-app-id
-            - name: INSTAGRAM_APP_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: g5-social-feed-service
-                  key: instagram-app-secret
             - name: INSTAGRAM_ACCESS_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: g5-social-feed-service
+                  name: social-feed-service
                   key: instagram-access-token
             - name: TWITTER_CONSUMER_KEY
               valueFrom:
                 secretKeyRef:
-                  name: g5-social-feed-service
+                  name: social-feed-service
                   key: twitter-consumer-key
             - name: TWITTER_CONSUMER_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: g5-social-feed-service
+                  name: social-feed-service
                   key: twitter-consumer-secret
             - name: WALKSCORE_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: g5-social-feed-service
+                  name: social-feed-service
                   key: walkscore-api-key
-            # namespace-specific
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: social-feed-service
+                  key: secret-key-base
             - name: NEW_RELIC_LICENSE_KEY
               valueFrom:
                 secretKeyRef:
-                  name: g5-social-feed-service
+                  name: social-feed-service
                   key: new-relic-license-key
             - name: NEW_RELIC_APP_NAME
               valueFrom:
                 secretKeyRef:
                   name: g5-social-feed-service
-                  key: new-relic-license-key
-            - name: REDIS_URL
+                  key: new-relic-app-name
+            - name: SKYLIGHT_AUTHENTICATION
               valueFrom:
                 secretKeyRef:
                   name: g5-social-feed-service
-                  key: redis-url
-            - name: PAGERDUTY_CLW_SERVICE_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: g5-social-feed-service
-                  key: pagerduty-clw-service-key
-            - name: PAGESPEED_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: g5-social-feed-service
-                  key: pagespeed-api-key
-            - name: PD_ALERT_THRESHOLD
-              valueFrom:
-                configMapKeyRef:
-                  name: g5-social-feed-service
-                  key: pagespeed-api-key
-            - name: PD_RESOLVABLE_THRESHOLD
-              valueFrom:
-                configMapKeyRef:
-                  name: g5-social-feed-service
-                  key: pagespeed-resolvable-threshold
+                  key: skylight-authentication
