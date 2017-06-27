@@ -15,8 +15,10 @@ class WalkscoreController < ApplicationController
   end
 
   def show
-    walkscore_json = "[]"
+    # walkscore_json = "[]"
     walkscore_json = walkscore_uri_method(params[:walkscore_client]).parsed_response
+
+    walkscore_json = [] if walkscore_json["status"].eql?(30) 
     render json: walkscore_json
   end
 end
