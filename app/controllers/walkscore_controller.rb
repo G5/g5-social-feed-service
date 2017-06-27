@@ -1,6 +1,6 @@
 require 'uri'
 class WalkscoreController < ApplicationController
-  caches_action :show, expires_in: 7.days
+  caches_action :show, expires_in: 12.hours
 
   def walkscore_uri_method(walkscore_client)
     fields = {
