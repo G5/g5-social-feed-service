@@ -22,7 +22,10 @@ class WalkscoreController < ApplicationController
     # But, it doesn't know what to do with a {"status":30}. So, use this as a band
     # aid until we can rework this whole endpoint into something more robust and 
     # somewhat testable. 
-    walkscore_json = [] if walkscore_json["status"].eql?(30)
+    if [2,30,31,40,41,42].include? walkscore_json["status"]
+      puts "\n*****************\n Bad Walkscore API Status Code: \n #{walkscore_json['status']} \n#{params[:walkscore_client]} \n*****************\n"
+      walkscore_json = []
+    end
 
     render json: walkscore_json
   end
