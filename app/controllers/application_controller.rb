@@ -9,6 +9,6 @@ class ApplicationController < ActionController::Base
   end
 
   def not_found
-    render text: "404 not found", status: 404
+    render plain: "404 not found", status: 404
   end
 end

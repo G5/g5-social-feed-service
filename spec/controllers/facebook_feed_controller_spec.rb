@@ -16,7 +16,8 @@ RSpec.describe FacebookFeedController, :type => :controller do
   end
 
   it "404's if facebook_page_id is not provided" do
-    get :show, params: {facebook_page_id: nil}
+    get :show
+    expect(response.body).to eq "404 not found"
     expect(response.status).to be(404)
   end
 end
