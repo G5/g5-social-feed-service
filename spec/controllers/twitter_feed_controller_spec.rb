@@ -9,7 +9,7 @@ RSpec.describe TwitterFeedController, :type => :controller do
     Twitter::REST::Client.stub(:new).with(config) { api_object }
 
     expect(api_object).to receive(:user_timeline).with("hansolo", options)
-    get :show, handle: "hansolo"
+    get :show, params: {handle: "hansolo"}
   end
 
   it "Forwards Twitter's response as json" do
@@ -17,7 +17,7 @@ RSpec.describe TwitterFeedController, :type => :controller do
     Twitter::REST::Client.stub(:new) { api_object }
     api_object.stub(:user_timeline) { fake_data }
 
-    get :show, handle: "hansolo"
+    get :show, params: {handle: "hansolo"}
     expect(response.body).to eq(fake_data)
   end
 end
