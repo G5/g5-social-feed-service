@@ -1,16 +1,16 @@
 source 'https://rubygems.org'
-ruby "2.1.2"
+ruby "2.4.1"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.4'
+gem 'rails', '~> 5.1.2'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-rails', '~> 4.2.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
@@ -30,15 +30,17 @@ gem 'dotenv-rails', :groups => [:development, :test]
 
 gem 'actionpack-action_caching'
 gem "koala", "~> 1.10.0"
-gem "httparty", "~> 0.13.1"
+gem "httparty"
 gem "json"
 gem 'newrelic_rpm'
 
 gem 'twitter'
 gem 'google_plus'
-
-gem 'rspec-rails', '~> 3.0.0', :groups => [:development, :test]
-
+group :test do
+  gem 'rspec-rails'
+  gem 'rails-controller-testing'
+  gem 'pry'
+end
 gem 'puma'
 
 # Use ActiveModel has_secure_password

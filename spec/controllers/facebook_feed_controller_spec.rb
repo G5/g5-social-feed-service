@@ -12,11 +12,12 @@ RSpec.describe FacebookFeedController, :type => :controller do
 
   it "Calls the Facebook Graph API with the correct params" do
     expect(HTTParty).to receive(:get).with(facebook_api_request).and_return(response_json)
-    get :show, facebook_page_id: page_id
+    get :show, params: {facebook_page_id: page_id}
   end
 
   it "404's if facebook_page_id is not provided" do
     get :show
+    expect(response.body).to eq "404 not found"
     expect(response.status).to be(404)
   end
 end
