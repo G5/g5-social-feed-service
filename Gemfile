@@ -40,6 +40,8 @@ group :test do
   gem 'rspec-rails'
   gem 'rails-controller-testing'
   gem 'pry'
+  gem 'simplecov', require: false
+  gem 'simplecov-console', require: false
 end
 gem 'puma'
 
