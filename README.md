@@ -1,5 +1,8 @@
 # G5 Social Feed Service
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/7de68c75e44873796ad9/maintainability)](https://codeclimate.com/repos/599b33d8505818028700007b/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/7de68c75e44873796ad9/test_coverage)](https://codeclimate.com/repos/599b33d8505818028700007b/test_coverage)
+
 A Rails app that fetches data from the Twitter, Facebook, and Google+ API's.
 
 

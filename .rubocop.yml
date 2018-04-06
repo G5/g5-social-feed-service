@@ -1,0 +1,21 @@
+inherit_from:
+  - .rubocop_rails.yml
+  - .rubocop_todo.yml
+inherit_mode:
+  merge:
+    - Exclude
+AllCops:
+  Exclude:
+    - 'bin/**/*'
+    - 'db/schema.rb'
+    - 'vendor/**/*'
+# Enable all the rails and lint cops because they're usually important,
+# and the default Rails config disables them because they're more pertinent
+# to Rails apps than the Rails source code itself
+Rails:
+  Enabled: true
+Lint:
+  Enabled: true
+# Single-quotes seems to predominate in our codebases
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
