@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FacebookFeedController, :type => :controller do
 
-  let(:api_domain) { 'https://graph.facebook.com/v2.6' }
+  let(:api_domain) { 'https://graph.facebook.com/v2.12' }
   let(:page_id) { "1234567890" }
   let(:api_path) { "posts" }
   let(:fields) { ["id", "from", "message", "picture", "link", "type", "created_time", "updated_time"] }
