@@ -11,13 +11,13 @@ RSpec.describe WalkscoreController, :type => :controller do
   it "returns a json response from Walkscore API" do
   # mock request to walkscore API
     RSpec.configure do |config|
-    config.before(:each) do
-      stub_request(:get, /api.walkscore.com/).
-        with(headers: {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
-        to_return(
-        :status => 200,
-        :headers => {"Content-Type"=> "application/json"})
+      config.before(:each) do
+        stub_request(:get, /api.walkscore.com/).
+          with(headers: {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
+          to_return(
+            :status => 200,
+            :headers => {"Content-Type"=> "application/json"})
+        end
+      end
     end
-  end
-  end
 end
