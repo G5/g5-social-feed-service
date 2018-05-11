@@ -9,8 +9,15 @@ RSpec.describe WalkscoreController, :type => :controller do
   let(:walkscore_location) {controller.params[:walkscore_location]}
 
   it "returns a json response from Walkscore API" do
-    #could mock out the response so it's not hitting a real service
-    response = controller.walkscore_uri_method(walkscore_location)
-    response.header['Content-Type'].should include 'application/json'
+  # mock request to walkscore API
+    RSpec.configure do |config|
+    config.before(:each) do
+      stub_request(:get, /api.walkscore.com/).
+        with(headers: {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
+        to_return(
+        :status => 200,
+        :headers => {"Content-Type"=> "application/json"})
+    end
+  end
   end
 end

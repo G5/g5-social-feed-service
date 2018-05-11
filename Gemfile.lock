@@ -55,6 +55,8 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
     crass (1.0.4)
     diff-lcs (1.3)
     docile (1.3.0)
@@ -75,7 +77,9 @@ GEM
     google_plus (0.2.4)
       json
       rest-client (~> 1.6)
+    hashdiff (0.3.7)
     hirb (0.7.3)
+    honeybadger (3.3.0)
     http (2.2.2)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
@@ -182,6 +186,7 @@ GEM
       rspec-mocks (~> 3.6.0)
       rspec-support (~> 3.6.0)
     rspec-support (3.6.0)
+    safe_yaml (1.0.4)
     sass (3.5.1)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -239,6 +244,10 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.4)
+    webmock (3.4.1)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -251,6 +260,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2.0)
   dotenv-rails
   google_plus
+  honeybadger (~> 3.1)
   httparty
   jbuilder (~> 2.0)
   jquery-rails
@@ -270,6 +280,7 @@ DEPENDENCIES
   turbolinks
   twitter
   uglifier (>= 1.3.0)
+  webmock
 
 RUBY VERSION
    ruby 2.4.1p111

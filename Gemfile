@@ -33,6 +33,7 @@ gem "koala", "~> 1.10.0"
 gem "httparty"
 gem "json"
 gem 'newrelic_rpm'
+gem 'honeybadger', '~> 3.1'
 
 gem 'twitter'
 gem 'google_plus'
@@ -45,6 +46,9 @@ group :test do
 end
 gem 'puma'
 
+group :development, :test do
+  gem "webmock"
+end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
