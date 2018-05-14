@@ -22,3 +22,5 @@
 
 # Test coverage artifacts
 coverage/*
+
+config/honeybadger.yml
