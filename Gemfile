@@ -33,6 +33,7 @@ gem "koala", "~> 1.10.0"
 gem "httparty"
 gem "json"
 gem 'newrelic_rpm'
+gem 'honeybadger', '~> 3.1'
 
 gem 'twitter'
 gem 'google_plus'

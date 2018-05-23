@@ -76,6 +76,7 @@ GEM
       json
       rest-client (~> 1.6)
     hirb (0.7.3)
+    honeybadger (3.3.0)
     http (2.2.2)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
@@ -251,6 +252,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2.0)
   dotenv-rails
   google_plus
+  honeybadger (~> 3.1)
   httparty
   jbuilder (~> 2.0)
   jquery-rails
