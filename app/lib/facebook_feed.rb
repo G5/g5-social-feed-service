@@ -10,7 +10,7 @@ class FacebookFeed
   CACHE_INTERVAL = 12.hours
 
   API_REST_INTERVAL = 60.minutes
-  API_SAFE_THRESHOLD = 75
+  API_SAFE_THRESHOLD = 20
   API_CRITICAL_THRESHOLD = 95 
 
   def initialize(page_id)
