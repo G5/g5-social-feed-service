@@ -1,0 +1,94 @@
+class FacebookFeed
+  # Development
+  # CACHE_INTERVAL = 15.minutes
+
+  # API_REST_INTERVAL = 3.minutes
+  # API_SAFE_THRESHOLD = 1
+  # API_CRITICAL_THRESHOLD = 3 
+
+  # Production
+  CACHE_INTERVAL = 12.hours
+
+  API_REST_INTERVAL = 60.minutes
+  API_SAFE_THRESHOLD = 75
+  API_CRITICAL_THRESHOLD = 95 
+
+  def initialize(page_id)
+    @page_id = page_id
+    @api_status = JSON.parse(API_STATUS.get(:facebook))
+    @api_usage = @api_status['status']
+    @usage_timestamp = Time.parse(@api_status['time'])
+    @cached_feed = FACEBOOK_CACHE.get(@page_id)
+    @parsed_cache = JSON.parse(@cached_feed) if @cached_feed
+    @now = Time.now
+  end
+
+  def fetch_from_cache_or_api
+    if api_needs_rest?
+      data = feed_from_cache
+    elsif api_is_strong? || is_new_feed?
+      data = feed_from_api
+    elsif feed_is_old? && !api_needs_rest?
+      data = feed_from_api
+    else
+      puts "//////////////////////////// Shouldn't ever land here ////////////////////////////////"
+      data = api_down_response
+    end
+    return data
+  end
+
+  private
+
+  def feed_from_cache
+    puts "########################### Serving From Cache: #{@page_id} ###########################"
+    if @parsed_cache
+      data = @parsed_cache['data']
+    else
+      data = api_down_response
+    end
+  end
+
+  def feed_from_api
+    puts "$$$$$$$$$$$$$$$$$$$$$ Hitting the API for data: #{@page_id} $$$$$$$$$$$$$$$$$$$$$"
+    fields = ["id", "from", "message", "picture", "link", "type", "created_time", "updated_time"]
+    facebook_feed_uri = URI.encode("https://graph.facebook.com/v2.12/#{@page_id}/posts?access_token=#{ENV['FACEBOOK_APP_ID']}|#{ENV['FACEBOOK_APP_SECRET']}&fields=#{fields.join(',')}")
+    response = HTTParty.get(facebook_feed_uri)
+
+    data = response.parsed_response
+    api_status = { time: @now, status: JSON.parse(response.headers["x-app-usage"])["call_count"] }
+    cached_feed = { time: @now, data: data }
+
+    API_STATUS.set(:facebook, api_status.to_json)
+    FACEBOOK_CACHE.set(@page_id, cached_feed.to_json)
+
+    puts "?????????????????????? API Usage: #{api_status} ??????????????????????"
+
+    return data
+  end
+
+  def api_needs_rest?
+    @api_usage > API_CRITICAL_THRESHOLD && @now < @usage_timestamp + API_REST_INTERVAL
+  end
+
+  def api_is_strong?
+    @api_usage < API_SAFE_THRESHOLD
+  end
+
+  def is_new_feed?
+    !@cached_feed.nil?
+  end
+
+  def feed_is_old?
+    (Time.parse(@parsed_cache["time"]) + CACHE_INTERVAL) < @now
+  end
+
+  def api_down_response
+    puts "***************** Serving API error response ********************"
+    { data: [ { id: "1",
+                message: "The Facebook API is currently down. Please try again later",
+                from: { id: "", name: "Facebook" }
+              }
+            ]
+    }
+  end
+end
