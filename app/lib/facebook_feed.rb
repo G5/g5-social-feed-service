@@ -80,6 +80,7 @@ class FacebookFeed
   end
 
   def feed_is_old?
+    return true if @parsed_cache.nil?
     (Time.parse(@parsed_cache["time"]) + CACHE_INTERVAL) < @now
   end
 
