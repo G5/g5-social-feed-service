@@ -7,6 +7,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'spring',        group: :development
 gem 'coffee-rails', '~> 4.2.0'
+gem 'turbolinks'
 
 gem 'actionpack-action_caching'
 gem "koala", "~> 1.10.0"
