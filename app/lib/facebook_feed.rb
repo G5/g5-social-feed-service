@@ -27,6 +27,8 @@ class FacebookFeed
   def fetch_from_cache_or_api
     if api_needs_rest?
       data = feed_from_cache
+    elsif !api_is_strong? && !feed_is_old?
+      data = feed_from_cache
     elsif api_is_strong? || is_new_feed?
       data = feed_from_api
     elsif feed_is_old? && !api_needs_rest?
