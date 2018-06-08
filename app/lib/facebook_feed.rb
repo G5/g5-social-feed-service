@@ -1,14 +1,5 @@
 class FacebookFeed
-  # Development
-  # CACHE_INTERVAL = 15.minutes
-
-  # API_REST_INTERVAL = 3.minutes
-  # API_SAFE_THRESHOLD = 1
-  # API_CRITICAL_THRESHOLD = 3 
-
-  # Production
   CACHE_INTERVAL = 12.hours
-
   API_REST_INTERVAL = 60.minutes
   API_SAFE_THRESHOLD = 20
   API_CRITICAL_THRESHOLD = 95 
@@ -34,7 +25,9 @@ class FacebookFeed
     elsif feed_is_old? && !api_needs_rest?
       data = feed_from_api
     else
+      puts "//////////////////////////////////////////////////////////////////////////////////////"
       puts "//////////////////////////// Shouldn't ever land here ////////////////////////////////"
+      puts "//////////////////////////////////////////////////////////////////////////////////////"
       data = api_down_response
     end
     return data
@@ -43,16 +36,17 @@ class FacebookFeed
   private
 
   def feed_from_cache
-    puts "########################### Serving From Cache: #{@page_id} ###########################"
     if @parsed_cache
+      puts "########################### Serving From Cache: #{@page_id} ###########################"
       data = @parsed_cache['data']
     else
+      puts "*************************** Serving API error response ********************"
       data = api_down_response
     end
   end
 
   def feed_from_api
-    puts "$$$$$$$$$$$$$$$$$$$$$ Hitting the API for data: #{@page_id} $$$$$$$$$$$$$$$$$$$$$"
+    puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ Hitting the API for data: #{@page_id} $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
     fields = ["id", "from", "message", "picture", "link", "type", "created_time", "updated_time"]
     facebook_feed_uri = URI.encode("https://graph.facebook.com/v2.12/#{@page_id}/posts?access_token=#{ENV['FACEBOOK_APP_ID']}|#{ENV['FACEBOOK_APP_SECRET']}&fields=#{fields.join(',')}")
     response = HTTParty.get(facebook_feed_uri)
@@ -64,7 +58,7 @@ class FacebookFeed
     API_STATUS.set(:facebook, api_status.to_json)
     FACEBOOK_CACHE.set(@page_id, cached_feed.to_json)
 
-    puts "?????????????????????? API Usage: #{api_status} ??????????????????????"
+    puts "??????????????????????????????????? API Usage: #{api_status} ?????????????????????????????????????????"
 
     return data
   end
@@ -87,7 +81,6 @@ class FacebookFeed
   end
 
   def api_down_response
-    puts "***************** Serving API error response ********************"
     { data: [ { id: "1",
                 message: "The Facebook API is currently down. Please try again later",
                 from: { id: "", name: "Facebook" }
