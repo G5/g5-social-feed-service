@@ -15,7 +15,8 @@ class FacebookFeed
 
   def initialize(page_id)
     @page_id = page_id
-    @api_status = JSON.parse(API_STATUS.get(:facebook))
+    raw_api_status = API_STATUS.get(:facebook) || { time: Time.now, status: 0 }.to_json
+    @api_status = JSON.parse(raw_api_status)
     @api_usage = @api_status['status']
     @usage_timestamp = Time.parse(@api_status['time'])
     @cached_feed = FACEBOOK_CACHE.get(@page_id)
