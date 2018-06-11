@@ -12,7 +12,9 @@ class FacebookFeed
     @usage_timestamp = Time.parse(@api_status['time'])
     @cached_feed = FACEBOOK_CACHE.get(@page_id)
     @parsed_cache = JSON.parse(@cached_feed) if @cached_feed
+    @data_timestamp = Time.parse(@parsed_cache['time']) if @parsed_cache
     @now = Time.now
+    @age_of_feed = ((@now - @data_timestamp)/1.hour).round(2) if @data_timestamp
   end
 
   def fetch_from_cache_or_api
@@ -40,7 +42,7 @@ class FacebookFeed
 
   def feed_from_cache
     if @parsed_cache
-      puts "########################### Serving From Cache: #{@page_id} ###########################"
+      puts "########################### Serving From Cache: #{@page_id} from #{ @age_of_feed } hours ago ###########################"
       data = @parsed_cache['data']
     else
       puts "*************************** Serving API error response ********************"
