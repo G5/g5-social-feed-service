@@ -1,4 +1,5 @@
 class FacebookFeed
+  CACHE_LIMIT = 18.hours
   CACHE_INTERVAL = 12.hours
   API_REST_INTERVAL = 60.minutes
   API_SAFE_THRESHOLD = 75
@@ -18,8 +19,7 @@ class FacebookFeed
   end
 
   def fetch_from_cache_or_api
-    if api_is_idle?
-      puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&& API has been sittle idle &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+    if api_is_idle? || feed_is_too_old?
       data = feed_from_api
     elsif api_needs_rest?
       data = feed_from_cache
@@ -87,6 +87,11 @@ class FacebookFeed
   def feed_is_old?
     return true if @parsed_cache.nil?
     (Time.parse(@parsed_cache["time"]) + CACHE_INTERVAL) < @now
+  end
+
+  def feed_is_too_old?
+    return false if @parsed_cache.nil?
+    (Time.parse(@parsed_cache["time"]) + CACHE_LIMIT) < @now
   end
 
   def api_down_response
