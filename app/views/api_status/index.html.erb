@@ -1,0 +1,5 @@
+<h1>Facebook API Status</h1>
+
+<p><strong>Rate Limit Usage:</strong> <%= @facebook_status['status'] %>%</p>
+<p><strong>Last API Hit:</strong> <%= ((Time.now - Time.parse(@facebook_status['time'])) / 1.minute).round(2) %> minutes ago.</p>
+<p>API hits will be paused for up to <%= FacebookFeed::API_REST_INTERVAL/1.minute %> minutes when Rate Limit Usage is over <%= FacebookFeed::API_CRITICAL_THRESHOLD %>%, 
