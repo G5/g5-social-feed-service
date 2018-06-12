@@ -1,7 +1,7 @@
 class FacebookFeed
   API_VERSION = "https://graph.facebook.com/v2.12"
 
-  CACHE_LIMIT = 18.hours
+  CACHE_LIMIT = 48.hours
   CACHE_INTERVAL = 12.hours
   API_REST_INTERVAL = 60.minutes
   API_SAFE_THRESHOLD = 75
