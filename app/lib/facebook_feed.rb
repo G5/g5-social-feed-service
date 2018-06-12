@@ -88,6 +88,7 @@ class FacebookFeed
   end
 
   def feed_is_very_old?
+    return false
     return false if @parsed_cache.nil? # New feeds need to wait for a healthy API
     (Time.parse(@parsed_cache["time"]) + CACHE_LIMIT) < @now
   end
