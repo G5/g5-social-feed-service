@@ -1,4 +1,6 @@
 class FacebookFeed
+  API_VERSION = "https://graph.facebook.com/v2.12"
+
   CACHE_LIMIT = 18.hours
   CACHE_INTERVAL = 12.hours
   API_REST_INTERVAL = 60.minutes
@@ -19,23 +21,13 @@ class FacebookFeed
   end
 
   def fetch_from_cache_or_api
-    if api_is_idle? || feed_is_too_old?
-      data = feed_from_api
-    elsif api_needs_rest?
-      data = feed_from_cache
-    elsif !api_is_strong? && !feed_is_old?
-      data = feed_from_cache
-    elsif api_is_strong? || is_new_feed?
-      data = feed_from_api
-    elsif feed_is_old? && !api_needs_rest?
-      data = feed_from_api
+    if api_is_idle? || api_is_strong? || feed_is_very_old? || (!feed_is_fresh? && api_ok?)
+      feed_from_api
+    elsif api_needs_rest? || feed_is_fresh?
+      feed_from_cache
     else
-      puts "//////////////////////////////////////////////////////////////////////////////////////"
-      puts "//////////////////////////// Shouldn't ever land here ////////////////////////////////"
-      puts "//////////////////////////////////////////////////////////////////////////////////////"
-      data = api_down_response
+      api_down_response
     end
-    return data
   end
 
   private
@@ -45,25 +37,23 @@ class FacebookFeed
       puts "########################### Serving From Cache: #{@page_id} from #{ @age_of_feed } hours ago ###########################"
       data = @parsed_cache['data']
     else
-      puts "*************************** Serving API error response ********************"
       data = api_down_response
     end
   end
 
   def feed_from_api
-    puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ Hitting the API for data: #{@page_id} $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
     fields = ["id", "from", "message", "picture", "link", "type", "created_time", "updated_time"]
-    facebook_feed_uri = URI.encode("https://graph.facebook.com/v2.12/#{@page_id}/posts?access_token=#{ENV['FACEBOOK_APP_ID']}|#{ENV['FACEBOOK_APP_SECRET']}&fields=#{fields.join(',')}")
+    facebook_feed_uri = URI.encode("#{API_VERSION}/#{@page_id}/posts?access_token=#{ENV['FACEBOOK_APP_ID']}|#{ENV['FACEBOOK_APP_SECRET']}&fields=#{fields.join(',')}")
     response = HTTParty.get(facebook_feed_uri)
-
     data = response.parsed_response
+
     api_status = { time: @now, status: JSON.parse(response.headers["x-app-usage"])["call_count"] }
     cached_feed = { time: @now, data: data }
 
     API_STATUS.set(:facebook, api_status.to_json)
     FACEBOOK_CACHE.set(@page_id, cached_feed.to_json)
 
-    puts "??????????????????????????????????? API Usage: #{api_status} ?????????????????????????????????????????"
+    puts "????????????????????????????? API Hit for #{@page_id}: #{api_status} ?????????????????????????????????????????"
 
     return data
   end
@@ -76,6 +66,10 @@ class FacebookFeed
     @api_usage > API_CRITICAL_THRESHOLD && @now < @usage_timestamp + API_REST_INTERVAL
   end
 
+  def api_ok?
+    @api_usage < API_CRITICAL_THRESHOLD
+  end
+
   def api_is_strong?
     @api_usage < API_SAFE_THRESHOLD
   end
@@ -84,13 +78,13 @@ class FacebookFeed
     !@cached_feed.nil?
   end
 
-  def feed_is_old?
-    return true if @parsed_cache.nil?
-    (Time.parse(@parsed_cache["time"]) + CACHE_INTERVAL) < @now
+  def feed_is_fresh?
+    return false if @parsed_cache.nil? # New feeds treated same as data older than 12hrs.
+    (Time.parse(@parsed_cache["time"]) + CACHE_INTERVAL) > @now
   end
 
-  def feed_is_too_old?
-    return false if @parsed_cache.nil?
+  def feed_is_very_old?
+    return false if @parsed_cache.nil? # New feeds need to wait for a healthy API
     (Time.parse(@parsed_cache["time"]) + CACHE_LIMIT) < @now
   end
 
