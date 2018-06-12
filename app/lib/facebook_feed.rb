@@ -15,8 +15,10 @@ class FacebookFeed
     @usage_timestamp = Time.parse(@api_status['time'])
     @cached_feed = FACEBOOK_CACHE.get(@page_id)
     @parsed_cache = JSON.parse(@cached_feed) if @cached_feed
-    @data_timestamp = Time.parse(@parsed_cache['time']) if @parsed_cache
     @now = Time.now
+
+    # REMOVE @age_of_feed AND @data_timestamp AFTER REVIEW/MONITOR PERIOD
+    @data_timestamp = Time.parse(@parsed_cache['time']) if @parsed_cache
     @age_of_feed = ((@now - @data_timestamp)/1.hour).round(2) if @data_timestamp
   end
 
@@ -34,6 +36,7 @@ class FacebookFeed
 
   def feed_from_cache
     if @parsed_cache
+      # REMOVE LOGGING AFTER REVIEW/MONITOR PERIOD
       puts "########################### Serving From Cache: #{@page_id} from #{ @age_of_feed } hours ago ###########################"
       data = @parsed_cache['data']
     else
@@ -53,6 +56,7 @@ class FacebookFeed
     API_STATUS.set(:facebook, api_status.to_json)
     FACEBOOK_CACHE.set(@page_id, cached_feed.to_json)
 
+    # REMOVE LOGGING AFTER REVIEW/MONITOR PERIOD
     puts "????????????????????????????? API Hit for #{@page_id}: #{api_status} ?????????????????????????????????????????"
 
     return data
@@ -89,6 +93,9 @@ class FacebookFeed
   end
 
   def api_down_response
+    # REMOVE LOGGING AFTER REVIEW/MONITOR PERIOD
+    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!! Unexpected result for #{@page_id} !!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+
     { data: [ { id: "1",
                 message: "The Facebook API is currently down. Please try again later",
                 from: { id: "", name: "Facebook" }
