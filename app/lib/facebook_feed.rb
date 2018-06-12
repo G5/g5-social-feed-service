@@ -27,7 +27,7 @@ class FacebookFeed
     elsif api_needs_rest? || feed_is_fresh?
       feed_from_cache
     else
-      api_down_response
+      feed_from_cache
     end
   end
 
