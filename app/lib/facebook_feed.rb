@@ -1,10 +1,10 @@
 class FacebookFeed
   API_VERSION = "https://graph.facebook.com/v2.12"
 
-  CACHE_INTERVAL = 12.hours
-  API_REST_INTERVAL = 60.minutes
-  API_SAFE_THRESHOLD = 75
-  API_CRITICAL_THRESHOLD = 95 
+  CACHE_INTERVAL = 12.hours      # Time after which we actively attempt to refresh cached data
+  API_REST_INTERVAL = 60.minutes # Amount of time to rest the API after we've maxed it out
+  API_SAFE_THRESHOLD = 75        # Usage rate under which we proactively rewarm cache with each request
+  API_CRITICAL_THRESHOLD = 95    # Usage rate that triggers a moratorium on API hits for the API_REST_INTERVAL
 
   def initialize(page_id)
     @page_id = page_id
