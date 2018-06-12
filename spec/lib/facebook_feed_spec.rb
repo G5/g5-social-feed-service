@@ -4,7 +4,6 @@ describe FacebookFeed do
   # Time represents when the feed was last pulled from the API and cached.
   let(:fresh_feed)    { { time: (Time.now - 3.hours),  data: "Feed cached 3 hours ago" }.to_json }
   let(:stale_feed)    { { time: (Time.now - 16.hours), data: "Feed cached 16 hours ago" }.to_json }
-  let(:very_old_feed) { { time: (Time.now - 36.hours), data: "Feed cached 36 hours ago" }.to_json }
 
   # API Status expressed as a percentage of rate limit used.
   let(:underutilized_api)     { { time: (Time.now - 10.minutes), status: 15 }.to_json }
@@ -25,7 +24,6 @@ describe FacebookFeed do
     allow(FACEBOOK_CACHE).to receive(:get).with("new_feed")      { nil }
     allow(FACEBOOK_CACHE).to receive(:get).with("fresh_feed")    { fresh_feed }
     allow(FACEBOOK_CACHE).to receive(:get).with("stale_feed")    { stale_feed }
-    allow(FACEBOOK_CACHE).to receive(:get).with("very_old_feed") { very_old_feed }
 
     allow(HTTParty).to receive(:get).with(api_request) { api_response }
     allow(api_response).to receive(:parsed_response) { parsed_response }
@@ -76,7 +74,7 @@ describe FacebookFeed do
       allow(Time).to receive(:now) { current_time }
     end
 
-    ["new_feed","fresh_feed","stale_feed","very_old_feed"].each do |facebook_page_id|
+    ["new_feed","fresh_feed","stale_feed"].each do |facebook_page_id|
       let(:page_id) { facebook_page_id }
 
       it "hits the Facebook API for all requests" do
@@ -108,20 +106,10 @@ describe FacebookFeed do
     end
   end
 
-  describe "very old caches of data and a maxed rate limit" do
-    let(:api_utilization) { overutilized_api }
-    let(:page_id) { "very_old_feed" }
-
-    it "hits the Facebook API only when the cached data is very old" do
-      expect(HTTParty).to receive(:get).with(api_request) { api_response }
-      subject
-    end
-  end
-
   describe "API has not been hit in the last hour" do
     let(:api_utilization) { api_sitting_idle }
 
-    ["new_feed","fresh_feed","stale_feed","very_old_feed"].each do |facebook_page_id|
+    ["new_feed","fresh_feed","stale_feed"].each do |facebook_page_id|
       let(:page_id) { facebook_page_id }
 
       it "hits the Facebook API for any request" do

@@ -1,7 +1,6 @@
 class FacebookFeed
   API_VERSION = "https://graph.facebook.com/v2.12"
 
-  CACHE_LIMIT = 48.hours
   CACHE_INTERVAL = 12.hours
   API_REST_INTERVAL = 60.minutes
   API_SAFE_THRESHOLD = 75
@@ -23,7 +22,7 @@ class FacebookFeed
   end
 
   def fetch_from_cache_or_api
-    if api_is_idle? || api_is_strong? || feed_is_very_old? || (!feed_is_fresh? && api_ok?)
+    if api_is_idle? || api_is_strong? || (feed_needs_refresh? && api_ok?)
       feed_from_api
     elsif api_needs_rest? || feed_is_fresh?
       feed_from_cache
@@ -87,10 +86,9 @@ class FacebookFeed
     (Time.parse(@parsed_cache["time"]) + CACHE_INTERVAL) > @now
   end
 
-  def feed_is_very_old?
-    return false
-    return false if @parsed_cache.nil? # New feeds need to wait for a healthy API
-    (Time.parse(@parsed_cache["time"]) + CACHE_LIMIT) < @now
+  def feed_needs_refresh?
+    return true if @parsed_cache.nil? # New feeds treated same as data older than 12hrs.
+    (Time.parse(@parsed_cache["time"]) + CACHE_INTERVAL) < @now
   end
 
   def api_down_response
