@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  root 'api_status#index'
+  
+  resources :api_status, only: [:index]
 
   get 'google-plus-feed/:google_plus_page_id' => 'google_plus_feed#show'
 
