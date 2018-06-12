@@ -101,6 +101,7 @@ describe FacebookFeed do
 
       it "serves data from the cache" do
         expect(HTTParty).to_not receive(:get)
+        expect(FACEBOOK_CACHE).to receive(:get).with(page_id)
         subject
       end
     end
