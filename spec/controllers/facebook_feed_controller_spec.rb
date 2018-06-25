@@ -2,16 +2,12 @@ require 'rails_helper'
 
 RSpec.describe FacebookFeedController, :type => :controller do
 
-  let(:api_domain) { 'https://graph.facebook.com/v2.12' }
   let(:page_id) { "1234567890" }
-  let(:api_path) { "posts" }
-  let(:fields) { ["id", "from", "message", "picture", "link", "type", "created_time", "updated_time"] }
-  let(:access_token) { "facebook-app-id%7Cfacebook-app-secret" }
-  let(:response_json) { double("response_json", :parsed_response => []) }
-  let(:facebook_api_request) { "#{api_domain}/#{page_id}/#{api_path}?access_token=#{access_token}&fields=#{fields.join(',')}" }
+  let(:facebook_feed) { double :feed_object }
 
-  it "Calls the Facebook Graph API with the correct params" do
-    expect(HTTParty).to receive(:get).with(facebook_api_request).and_return(response_json)
+  it "Calls the Facebook Feed class" do
+    expect(FacebookFeed).to receive(:new).with(page_id) { facebook_feed }
+    expect(facebook_feed).to receive(:fetch_from_cache_or_api)
     get :show, params: {facebook_page_id: page_id}
   end
 
