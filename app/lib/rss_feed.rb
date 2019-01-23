@@ -1,5 +1,4 @@
 class RssFeed
-
   def initialize(feed_url)
     @feed_url = feed_url;
   end
@@ -11,5 +10,4 @@ class RssFeed
 
     { results: results }.to_json
   end
-
 end
