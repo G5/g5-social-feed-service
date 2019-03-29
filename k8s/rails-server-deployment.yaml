@@ -8,9 +8,9 @@ metadata:
           { "containerName": "rails-server" }
         ]
       }
-  name: g5-social-feed-service-rails-servers
+  name: social-feed-service-rails-servers
   labels:
-    app: g5-social-feed-service
+    app: social-feed-service
 spec:
   replicas: 1
   revisionHistoryLimit: 10
@@ -21,13 +21,13 @@ spec:
       maxSurge: 1
   selector:
     matchLabels:
-      app: g5-social-feed-service
+      app: social-feed-service
       tier: web-app
   template:
     metadata:
       name: rails-server
       labels:
-        app: g5-social-feed-service
+        app: social-feed-service
         tier: web-app
     spec:
       imagePullSecrets:
@@ -68,9 +68,6 @@ spec:
             limits:
               memory: "1024Mi"
               cpu: "1000m"
-          #volumeMounts:
-            #- name: config
-              #mountPath: /app/config/k8s
           env:
             - name: RAILS_ENV
               value: production
@@ -78,10 +75,7 @@ spec:
               value: production
             # tier-specific
             - name: PUMA_CONCURRENCY
-              valueFrom:
-                configMapKeyRef:
-                  name: social-feed-service
-                  key: puma-concurrency
+              value: "2"
             #app-specific
             - name: FACEBOOK_APP_ID
               valueFrom:
@@ -131,10 +125,28 @@ spec:
             - name: NEW_RELIC_APP_NAME
               valueFrom:
                 secretKeyRef:
-                  name: g5-social-feed-service
+                  name: social-feed-service
                   key: new-relic-app-name
             - name: SKYLIGHT_AUTHENTICATION
               valueFrom:
                 secretKeyRef:
-                  name: g5-social-feed-service
+                  name: social-feed-service
                   key: skylight-authentication
+            # namespace-specific
+            - name: G5_AUTH_ALLOW_PASSWORD_CREDENTIALS
+              value: "true"
+            - name: G5_AUTH_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: g5-auth
+                  key: endpoint
+            - name: G5_AUTH_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: g5-auth
+                  key: service-account-username
+            - name: G5_AUTH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: g5-auth
+                  key: service-account-password

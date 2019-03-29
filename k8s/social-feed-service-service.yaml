@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: social-feed-service
+  labels:
+    app: social-feed-service
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+  selector:
+    app: social-feed-service
+    tier: web-app
