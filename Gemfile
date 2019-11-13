@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby "2.6.2"
+ruby "2.6.5"
 
 gem 'rails', '~> 5.2.1'
 gem 'sass-rails', '~> 5.0'
@@ -20,11 +20,12 @@ gem 'redis-namespace'
 gem 'twitter'
 gem 'google_plus'
 gem 'puma'
+gem 'nokogiri', '>= 1.10.4'
+gem 'loofah', '>= 2.3.1'
 
 group :test do
   gem 'rspec-rails'
   gem 'rails-controller-testing'
-  gem 'pry'
   gem 'simplecov', require: false
   gem 'simplecov-console', require: false
 end
