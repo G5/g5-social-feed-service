@@ -1,0 +1,3 @@
+ruby-web-service:
+  configuration: staging
+  environment: content-staging

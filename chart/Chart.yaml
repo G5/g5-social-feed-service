@@ -1,0 +1,9 @@
+apiVersion: v1
+appVersion: "1.0"
+name: social-feed 
+version: 0.0.1
+description: Social Feed
+home: https://www.g5devops.com/
+icon: https://dalton.g5marketingcloud.com/assets/dalton-logo-06cd10f3787f9e8611772a2d29005dd9d9ff28103d627629aa21fe4989370dc9.jpg 
+sources:
+  - https://github.com/G5/g5-social-feed-service

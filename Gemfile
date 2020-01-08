@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
-ruby "2.6.2"
+source 'https://gem.fury.io/g5dev/'
+ruby "2.6.5"
 
 gem 'rails', '~> 5.2.1'
 gem 'sass-rails', '~> 5.0'
@@ -13,9 +14,14 @@ gem 'actionpack-action_caching'
 gem "koala", "~> 1.10.0"
 gem "httparty"
 gem "json"
-gem 'newrelic_rpm'
 gem 'honeybadger', '~> 3.1'
-gem 'redis-namespace'
+gem 'redis'
+
+gem 'scout_apm'
+gem 'lograge'
+gem 'okcomputer'
+gem 'prometheus_exporter'
+gem 'g5devops'
 
 gem 'twitter'
 gem 'google_plus'

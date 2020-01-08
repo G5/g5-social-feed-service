@@ -1,0 +1,3 @@
+ruby-web-service:
+  configuration: production
+  environment: production

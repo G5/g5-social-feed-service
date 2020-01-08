@@ -3,6 +3,10 @@ Rails.application.configure do
 
   # Code is not reloaded between requests.
   config.cache_classes = true
+  
+  # Adds condensed logging
+  config.lograge.enabled = true
+  config.lograge.ignore_actions = [ "OkComputer::OkComputerController#show" ]
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
@@ -41,17 +45,27 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
 
-  # Set to :debug to see everything in the log.
-  config.log_level = :info
+  # Use the lowest log level to ensure availability of diagnostic information
+  # when problems arise.
+  config.log_level = ENV.fetch("LOG_LEVEL", "info")
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
 
-  # Use a different logger for distributed setups.
-  # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
+  # Disable serving static files from the `/public` folder by default since
+  # Apache or NGINX already handles this.
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter = config.log_formatter
+    config.logger = ActiveSupport::TaggedLogging.new(logger)
+  end
 
   # Use a different cache store in production.
-  # config.cache_store = :mem_cache_store
+  config.cache_store = :redis_cache_store, { url:                (ENV["CACHE_STORE_URL"] || ""),
+                                             expires_in:         (ENV['CACHE_EXPIRES_IN_HOURS'] || (24 * 1)).hours,
+                                             race_condition_ttl: (ENV['CACHE_RACE_TTL_IN_MINUTES'] || 5).minutes }
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = "http://assets.example.com"

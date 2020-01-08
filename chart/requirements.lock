@@ -1,0 +1,6 @@
+dependencies:
+- name: ruby-web-service
+  repository: https://charts.g5devops.com
+  version: 1.1.1
+digest: sha256:f17f9f3e8a9513f977c7bb2be41824c2d4f608863b5b3d0828fb18ab0aa83951
+generated: 2019-10-31T11:19:46.731384-07:00

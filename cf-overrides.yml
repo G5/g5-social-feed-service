@@ -1,3 +1,7 @@
-BaseImageTag: "2.6-v1.0.2"
-TestPostgresImageTag: "9.4"
+CIPlan: "g5search/ci-plan-rails:v1.2.0"
+BaseImageTag: "2.6-v1.0.4"
+TestPostgresImageTag: "11"
 DisableYarn: true
+AdditionalPoolConnectionCount: 1
+TestEnvironment:
+  - CACHE_STORE_URL=redis://redis:6379
