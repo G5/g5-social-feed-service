@@ -1,4 +1,4 @@
-CIPlan: "g5search/ci-plan-rails:v1.2.0"
+CIPlan: "g5search/ci-plan-rails:v1.2.1"
 BaseImageTag: "2.6-v1.0.4"
 TestPostgresImageTag: "11"
 DisableYarn: true
