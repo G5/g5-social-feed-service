@@ -3,6 +3,7 @@ ruby-web-service:
     name: "r.cfcr.io/g5dev/social-feed"
   isInternetFacing: true
   hasMetrics: true
+  hasDatabase: false
   customTypeCollectors:
     - "collectors/model_rows_collector.rb"
   configurations:
