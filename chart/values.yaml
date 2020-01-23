@@ -25,7 +25,7 @@ ruby-web-service:
         memory: "600Mi"
         cpu: "1000m"
   env:
-    - name: REDIS_URL
+    - name: CACHE_STORE_URL
       valueFrom:
         configMapKeyRef:
           name: social-feed-cache-memorystore
