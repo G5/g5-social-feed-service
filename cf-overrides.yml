@@ -3,5 +3,6 @@ BaseImageTag: "2.6-v1.0.4"
 TestPostgresImageTag: "11"
 DisableYarn: true
 AdditionalPoolConnectionCount: 1
+TestDatabaseSetup: " "
 TestEnvironment:
   - CACHE_STORE_URL=redis://redis:6379
