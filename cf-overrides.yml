@@ -5,5 +5,3 @@ DisableYarn: true
 AdditionalPoolConnectionCount: 1
 TestEnvironment:
   - CACHE_STORE_URL=redis://redis:6379
-  - FACEBOOK_APP_ID=facebook-app-id
-  - FACEBOOK_APP_SECRET=facebook-app-secret
