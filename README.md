@@ -9,7 +9,8 @@ A Rails app that fetches data from the Twitter, Facebook, and Google+ API's.
 ## Setup
 
 1. Install all the required gems.
-```bash
+```
+bash
 $ bundle
 ```
 
