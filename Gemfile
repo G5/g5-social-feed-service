@@ -13,7 +13,7 @@ gem 'actionpack-action_caching'
 gem "koala", "~> 1.10.0"
 gem "httparty"
 gem "json"
-gem 'newrelic_rpm'
+gem 'scout_apm'
 gem 'honeybadger', '~> 3.1'
 gem 'redis-namespace'
 
